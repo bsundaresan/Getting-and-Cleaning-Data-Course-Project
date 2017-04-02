@@ -32,4 +32,5 @@ The following transformations have been carried out on the data set
   3. Selecting only mean and standard deviation features using grep
   4. Formatting feature names with descriptive variable names using gsub 
   5. Calculating the mean of feature values accoring to activity labels and storing in final variable
+  6. Using write.table function to output tidy data in text file
   
