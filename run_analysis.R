@@ -86,4 +86,6 @@ run_analysis <- function(fileurl) {
   
   final <- final %>% group_by(activity) %>% summarise_each(funs(mean(., na.rm=TRUE)))
   
+  write.table(final, file = "tidydata.txt", row.names=FALSE)
+  
 }
