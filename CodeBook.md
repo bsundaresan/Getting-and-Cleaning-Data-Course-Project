@@ -22,15 +22,14 @@ The variables used in run_analysis.R have been listed below along with their fun
   5. features: Reads features from features.txt file
   6. split_features: stores split list of feature names
   7. final: stores merged data from train and test files
-  8. activity_train: stores activity category labels for train data
-  9. activity_test: stores activity category labels for test data 
-  10. activity_final: stores activity category labels for final data 
+  8. activity_final: stores activity category labels for final data 
+  9. subject_final: stores subject labels for final data
 
 The following transformations have been carried out on the data set
   1. Merging of the train and test data using rbind
   2. Formatting feature names to split feature number and feature name using for loop
   3. Selecting only mean and standard deviation features using grep
   4. Formatting feature names with descriptive variable names using gsub 
-  5. Calculating the mean of feature values accoring to activity labels and storing in final variable
+  5. Calculating the mean of feature values accoring to activity and subject labels and storing in final variable
   6. Using write.table function to output tidy data in text file
   
