@@ -2,7 +2,9 @@ run_analysis <- function(fileurl) {
   
   #Load relevant libraries. Script may not work properly 
   #if you have not installed and loaded plyr, dplyr packages 
+  
   library(plyr)
+  
   library(dplyr)
   
   #Downloading and unzipping file from source page
@@ -49,23 +51,29 @@ run_analysis <- function(fileurl) {
   
   #read activity labels for train and test datasets and merge the two 
   
-  activity_train <- read.table("./UCI HAR Dataset/train/y_train.txt")
+  activity_final <- rbind(read.table("./UCI HAR Dataset/train/y_train.txt"), 
+                          read.table("./UCI HAR Dataset/test/y_test.txt"))
   
-  activity_test <- read.table("./UCI HAR Dataset/test/y_test.txt")
-  
-  activity_final <- rbind(activity_train, activity_test)
+  subject_final <- rbind(read.table("./UCI HAR Dataset/train/subject_train.txt"), 
+                         read.table("./UCI HAR Dataset/test/subject_test.txt"))
   
   names(activity_final) <- "activity"
   
-  #Select mean and standard deviation data and assign activity labels 
+  names(subject_final) <- "subject"
+  
+  #Select mean and standard deviation data and assign activity and subject labels 
   
   final <- final[grep("mean[()]|std[()]", names(test))]
   
   final <- cbind(final, activity_final)
   
+  final <- cbind(final, subject_final)
+  
   final$activity <- factor(final$activity)
   
   final$activity <- factor(final$activity,labels=as.character(activity$V2))
+  
+  final$subject <- factor(final$subject)
   
   #Substituting existing column names with decriptive variable names 
   
@@ -84,8 +92,6 @@ run_analysis <- function(fileurl) {
   #Creating an independent dataset with average of each variable
   #according to subject
   
-  final <- final %>% group_by(activity) %>% summarise_each(funs(mean(., na.rm=TRUE)))
-  
-  write.table(final, file = "tidydata.txt", row.names=FALSE)
+  final <- final %>% group_by(activity, subject) %>% summarise_each(funs(mean(., na.rm=TRUE)))
   
 }
